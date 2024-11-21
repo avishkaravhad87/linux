@@ -5,6 +5,8 @@ Use of Sed command?
 How to check operating system name?
 Uname -a for general information
 Lsb_realease -a  for many distribution
+
+
 why 404,403,202 error occurs?
 404- not found
 Means: the server cannot find the request resource this is typically because the URL is incorrect the page has been deleted or the resource does not exist on the server 
@@ -54,6 +56,14 @@ Uniq -d
 We want to count 204,205,206 error in one file  how we count ?
 To count occurrence of specific error codes 204,205,206 in file you can use the grep command with -e for extended regular expressions followed by the wc -l count lines here how you can do it
 grep -E "204|205|206" filename | wc -l
+
+
+how to redirect output with showing on terminal?
+ls 2>&1 | tee prac.txt
+
+
+
+
 
 
 
