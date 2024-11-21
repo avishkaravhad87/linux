@@ -1,0 +1,68 @@
+Linux interview questions
+
+Use of Sed command?
+ Sed is stream editor and it can be used to edit text files with its most common use being to replace occurrence of words in a file.
+How to check operating system name?
+Uname -a for general information
+Lsb_realease -a  for many distribution
+why 404,403,202 error occurs?
+404- not found
+Means: the server cannot find the request resource this is typically because the URL is incorrect the page has been deleted or the resource does not exist on the server 
+Common issues are like URL is mis typed or outdated 
+The resource has been moved or deleted from server
+Wrong link or resource ID is being used in request
+403 forbidden 
+Means the server understand the request but the client do not have permission to access the requested resource. It typically means you do not have the required authorization to access the resource
+Common causes:
+You are trying to access the page or resource that is restricted ,often due to user permission or access control.
+The server is configure to block access based on specific criteria such as IP address geographical location or security settings
+The file or directory permission on the server might prevent access like limited permission, but don’t have right credentials you might get a 403 error. 
+202 – accepted 
+what it means the request has been accepted for processing but the processing is not yet completed this often used in cases where the request asynchronous 
+404: The resource cannot be found (missing page or wrong URL).
+403: The request is understood, but you do not have permission to access the resource (access denied).
+202: The request is accepted but not yet processed; it is a "pending" status code.
+
+
+
+
+Use of grep command with its options 
+What is grep 
+Global regular expression print
+Grep command search for a particular string/keyword from a file and print lines matching pattern
+It checks line by line and print line matching given pattern
+Is a Linux command line tool that allows to search files for a specified textual pattern when grep finds a match its prints line containing that pattern to the terminal 
+Syntax 
+Uses of grep command with its options 
+The grep command in Linux is a tool that search for text patterns in files and prints the matching line to terminal the command stand for global search for regular expression
+•	-i: Prints lines with matching criteria while ignores casing (Upper/Lowercase).
+
+•	Grep -I 
+•	-l: Prints filenames only.
+•	-n: Prints lines with matching criteria and line numbers.
+•	-c: Prints count of lines with matching criteria.
+•	-v: Prints lines not matching criteria (inverse search).
+•	-w: Prints whole word matches.
+
+
+Use of unique command?
+The uniq command in Linux is a command line utility that reports or filters out the repeated lines in a file in simple words, 
+uniq is a tool that helps to detect the adjustment duplicate line and also delete the duplicate line
+Uniq -i
+Uniq -d
+
+We want to count 204,205,206 error in one file  how we count ?
+To count occurrence of specific error codes 204,205,206 in file you can use the grep command with -e for extended regular expressions followed by the wc -l count lines here how you can do it
+grep -E "204|205|206" filename | wc -l
+
+
+
+
+
+
+
+
+
+
+
+ 
