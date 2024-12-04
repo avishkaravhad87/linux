@@ -1,56 +1,185 @@
-# Samba Server Installation on Ubuntu
+# SAMBA Server Setup Guide
 
-This repository provides a step-by-step guide to install and configure a **Samba server** on **Ubuntu**. Samba allows you to share files and printers between Linux and Windows systems, making it a useful tool for cross-platform file sharing.
-
-## Table of Contents
-
-
-
-## About
-
-This guide will walk you through the process of installing Samba on Ubuntu to enable file sharing between Ubuntu and Windows systems on the same network. Once configured, you can share directories or printers with other machines using Samba.
+This guide provides step-by-step instructions to set up a Samba server on a Linux machine. Samba is a utility/tool that allows sharing Linux files and print services with other operating systems using SMB (Server Message Block) and CIFS (Common Internet File System) protocols.
 
 ---
 
-## Prerequisites
+## **1. Installing Samba**
 
-- Ubuntu 18.04 or later (tested on Ubuntu 22.04)
-- Sudo or root privileges
-- A network connection for accessing the server from other machines (Windows/Linux)
-
----
-
-## Installation
-
-### Step 1: Update Package List
-
-Open a terminal and make sure your package list is up-to-date.
+To install Samba and its dependencies, run the following command:
 
 ```bash
+yum install samba samba-client samba-common -y
+
+Enabling Samba Through Firewall
+firewall-cmd --permanent --zone=public --add-service=samba
+firewall-cmd --reload
+
+If Firewall Commands Are Not Working:
+Install the firewall packages:
+
+RHEL/CentOS/AlmaLinux/Rocky Linux:
+sudo yum install firewalld -y
+Ubuntu/Debian:
 sudo apt update
+sudo apt install firewalld -y
+Then enable and start the firewall service:
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+3. Setting Up the Samba Directory
+Create the Directory:
+mkdir -p /samba/apps
+Navigate to the directory:
+cd /samba
+mkdir apps
+Create a Test File:
+touch samba/apps/samba_testfile
+Grant Permissions:
+chmod a+rwx samba/
+chmod a+rwx samba/apps/
+chmod a+rwx samba/apps/*
+ Handling SELinux
+If SELinux is enabled, adjust the security context for the Samba shared directory.
 
+Change the Security Context:
+chcon -t samba_share_t /samba/apps
+If chcon Does Not Work:
+Verify SELinux status:
+getenforce
+Ensure the directory exists:
+ls -ld /samba/apps
+Use the restorecon command:
+sudo restorecon -Rv /samba/apps
+5. Configuring Samba
+Edit the smb.conf file located at /etc/samba/smb.conf and add the following configuration:
+[global]
+    workgroup = SAMBA
+    netbios name = amazon linux
+    security = user
+    map to guest = bad user
+    dns proxy = no
 
-**
-**## step 2: install samba****
-sudo apt install samba
+[apps]
+    comment = Shared Directory
+    path = /samba/apps
+    browsable = yes
+    writable = yes
+    guest ok = yes
+    guest only = yes
+    read only = no
+Test the Configuration:
+testparm
 
+Here is the README.md file formatted for your GitHub repository:
 
-samba --version
-sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup
-sudo vim /etc/samba/smb.conf
-##At the bottom of the file, add the following configuration to create a share called shared
-[shared]
-   path = /home/yourusername/shared
-   browsable = yes
-   writable = yes
-   guest ok = yes
-   read only = no
-mkdir -p /home/<username>/shared
-sudo chmod 777 /home/<username>/shared
-sudo systemctl restart smbd
-sudo systemctl enable smbd
-\\ubuntu-ip\shared
+markdown
+Copy code
+# SAMBA Server Setup Guide
 
+This guide provides step-by-step instructions to set up a Samba server on a Linux machine. Samba is a utility/tool that allows sharing Linux files and print services with other operating systems using SMB (Server Message Block) and CIFS (Common Internet File System) protocols.
 
+---
 
+## **1. Installing Samba**
+
+To install Samba and its dependencies, run the following command:
+
+```bash
+yum install samba samba-client samba-common -y
+2. Enabling Samba Through Firewall
+Allow Samba services through the firewall and reload the firewall configuration:
+
+bash
+Copy code
+firewall-cmd --permanent --zone=public --add-service=samba
+firewall-cmd --reload
+If Firewall Commands Are Not Working:
+Install the firewall packages:
+
+RHEL/CentOS/AlmaLinux/Rocky Linux:
+bash
+Copy code
+sudo yum install firewalld -y
+Ubuntu/Debian:
+bash
+Copy code
+sudo apt update
+sudo apt install firewalld -y
+Then enable and start the firewall service:
+
+bash
+Copy code
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+3. Setting Up the Samba Directory
+Create the Directory:
+bash
+Copy code
+mkdir -p /samba/apps
+Navigate to the directory:
+
+bash
+Copy code
+cd /samba
+mkdir apps
+Create a Test File:
+bash
+Copy code
+touch samba/apps/samba_testfile
+Grant Permissions:
+bash
+Copy code
+chmod a+rwx samba/
+chmod a+rwx samba/apps/
+chmod a+rwx samba/apps/*
+4. Handling SELinux
+If SELinux is enabled, adjust the security context for the Samba shared directory.
+
+Change the Security Context:
+bash
+Copy code
+chcon -t samba_share_t /samba/apps
+If chcon Does Not Work:
+Verify SELinux status:
+bash
+Copy code
+getenforce
+Ensure the directory exists:
+bash
+Copy code
+ls -ld /samba/apps
+Use the restorecon command:
+bash
+Copy code
+sudo restorecon -Rv /samba/apps
+5. Configuring Samba
+Edit the smb.conf file located at /etc/samba/smb.conf and add the following configuration:
+
+ini
+Copy code
+[global]
+    workgroup = SAMBA
+    netbios name = amazon linux
+    security = user
+    map to guest = bad user
+    dns proxy = no
+
+[apps]
+    comment = Shared Directory
+    path = /samba/apps
+    browsable = yes
+    writable = yes
+    guest ok = yes
+    guest only = yes
+    read only = no
+Test the Configuration:
+bash
+Copy code
+testparm
+6. Enable and Start Samba Services
+Run the following commands to enable and start the Samba services:
+systemctl enable smb nmb
+systemctl start smb nmb
+Conclusion
+This guide helps set up a Samba server to share directories between Linux and Windows systems. Follow these steps carefully, and your Samba server will be up and running in no time!
 
