@@ -4,16 +4,7 @@ This repository provides a step-by-step guide to install and configure a **Samba
 
 ## Table of Contents
 
-- [About](#about)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
----
 
 ## About
 
@@ -37,7 +28,13 @@ Open a terminal and make sure your package list is up-to-date.
 
 ```bash
 sudo apt update
+
+
+**
+**## step 2: install samba****
 sudo apt install samba
+
+
 samba --version
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.backup
 sudo vim /etc/samba/smb.conf
